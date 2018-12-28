@@ -3,8 +3,8 @@ pragma solidity ^0.4.2;
 contract Match{  
 
 	address public organizer;					//组织者
-	mapping (address => uint) public buyers;	//买票者持有票数
-	uint public count;							//以售出票
+	mapping (address => uint) public buyers;			//买票者持有票数
+	uint public count;						//已售出票
 	uint public price;  						//票价
 	uint public capacity;						//场馆容量
 	bool public stopsell;						//终止售票
@@ -32,8 +32,8 @@ contract Match{
 
 		if(msg.value >= (price * amount)) {
 			buyers[msg.sender] += amount;		//持有票数增加
-			count += amount;					//已售出票增加
-			if(count == capacity) {				//判断票是否售罄
+			count += amount;			//已售出票增加
+			if(count == capacity) {			//判断票是否售罄
 			    soldout = true;
 			}
 			Deposit(msg.sender, price * amount);
@@ -60,11 +60,11 @@ contract Match{
 		msg.sender.transfer(msg.value);
 	    if(stopsell == true) { return; }			//停止售票后不能再退款
 	    uint temp = buyers[msg.sender];			
-		if (temp >= amount) { 						//申请退票数量小于等于购票数量时才给予处理
+		if (temp >= amount) { 				//申请退票数量小于等于购票数量时才给予处理
 			Refund(msg.sender, price * amount);	
-			buyers[msg.sender] -= amount;			//持有票数减少
-			count -= amount;						//售票总数减少
-			soldout = false;						//存在多余票，没有售罄
+			buyers[msg.sender] -= amount;		//持有票数减少
+			count -= amount;			//售票总数减少
+			soldout = false;			//存在多余票，没有售罄
 			msg.sender.transfer(price * amount);	//退款
 		}
 		return;
