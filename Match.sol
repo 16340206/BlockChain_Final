@@ -56,8 +56,7 @@ contract Match{
 		}
 	}
 	//退票函数
-	function refundTicket(uint amount) public payable{	
-		msg.sender.transfer(msg.value);
+	function refundTicket(uint amount) public{	
 	    if(stopsell == true) { return; }			//停止售票后不能再退款
 	    uint temp = buyers[msg.sender];			
 		if (temp >= amount) { 				//申请退票数量小于等于购票数量时才给予处理
