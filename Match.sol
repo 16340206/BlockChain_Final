@@ -71,7 +71,7 @@ contract Match{
 
 
 	function stopSell() public{
-		if (msg.sender == organizer) {				// 停止售票
+		if (msg.sender == organizer && stopsell == false) {				// 停止售票
 			stopsell = true;
 			organizer.transfer(price * count);		//组织者获得实际收益
 		}
